@@ -10,11 +10,11 @@ try
 with ex -> ()
 
 let msg info = 
-  if debug then printf "%s" info else ()
+  if debug then printf "%s" info else () 
 
 
 let list2str list = 
-  String.concat "" (List.map string list)
+  String.concat "" (List.map string list) 
 
 let map2str store = 
-  Map.toList store |> list2str
+  Map.toList store |> list2str 

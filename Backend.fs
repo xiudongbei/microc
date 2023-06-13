@@ -1,37 +1,37 @@
-module Backend
-open System.Runtime.InteropServices
-open Machine
-let isLinux =
-    RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
-let isWindows =
-    RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
-let isOSX =
-    RuntimeInformation.IsOSPlatform(OSPlatform.OSX)
-type operand = string
+module Backend 
+open System.Runtime.InteropServices 
+open Machine 
+let isLinux = 
+    RuntimeInformation.IsOSPlatform(OSPlatform.Linux) 
+let isWindows = 
+    RuntimeInformation.IsOSPlatform(OSPlatform.Windows) 
+let isOSX = 
+    RuntimeInformation.IsOSPlatform(OSPlatform.OSX) 
+type operand = string 
 // 按W64/AMD调用约定计算偏移
-let arg_loc (n: int) : operand =
-    if isWindows then
-        (match n with
+let arg_loc (n: int) : operand = 
+    if isWindows then 
+        (match n with 
          | 0 -> "rcx"
          | 1 -> "rdx"
          | 2 -> "r08"
          | 3 -> "r09"
-         | _ -> $"qword [rbx + {8 * (n + 2)}]")
-    else
-        (match n with
-         | 0 -> "rdi"
+         | _ -> $"qword [rbx + {8 * (n + 2)}]") 
+    else 
+        (match n with 
+         | 0 -> "rdi" 
          | 1 -> "rsi"
          | 2 -> "rdx"
          | 3 -> "rcx"
          | 4 -> "r08"
          | 5 -> "r09"
-         | _ -> $"qword [rbx + {8 * (n - 4)}]")
-let new_label =
-    let i = ref 0 in
+         | _ -> $"qword [rbx + {8 * (n - 4)}]") 
+let new_label = 
+    let i = ref 0 in 
     let get () =
-        let v = !i in
+        let v = !i in 
         (i := (!i) + 1
-         ".Lasm" + (string v))
+         ".Lasm" + (string v)) 
     get
 let x86header =
     "\nextern printi\n"
@@ -39,12 +39,12 @@ let x86header =
     + "extern checkargc\n"
     + "global asm_main\n"
     + "section .data\n"
-    + "glovars: dq 0\n"
+    + "glovars: dq 0\n" 
     + "section .text\n"
-let beforeinit argc =
+let beforeinit argc = 
     "asm_main:\n"
     + "\tpush rbp\n"
-    + "\tmov qword [glovars], rsp\n"
+    + "\tmov qword [glovars], rsp\n" 
     + "\tsub qword [glovars], 8\n"
     + $"\tpush {arg_loc 1} ;save asm_main args\n"
     + $"\tpush {arg_loc 0}\n"
@@ -58,7 +58,7 @@ let beforeinit argc =
     + $"\tpop {arg_loc 1} ;pop asm_main args\n"
     + "\t; allocate globals:\n\t"
 let prog = string
-let rec emitx86 instr =
+let rec emitx86 instr = 
     match instr with
     | Label lab -> $"\n{lab}:\n\t"
     | FLabel (m, lab) ->

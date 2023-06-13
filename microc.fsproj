@@ -5,23 +5,23 @@
   </PropertyGroup>
   <ItemGroup>
   <FsLex Include="CLex.fsl">
-  <OtherFlags>--module CLex --unicode</OtherFlags>
+  <OtherFlags>--module CLex --unicode</OtherFlags> 
 </FsLex>
 <FsYacc Include="CPar.fsy">
     <OtherFlags>--module CPar</OtherFlags>
 </FsYacc>
-    <Compile Include="Absyn.fs" />
+    <Compile Include="Absyn.fs" /> 
     <Compile Include="Debug.fs" />
-    <Compile Include="CPar.fs" />
+    <Compile Include="CPar.fs" /> 
     <Compile Include="CLex.fs" />
-    <Compile Include="Parse.fs" />
-    <Compile Include="Machine.fs" />
-    <Compile Include="Backend.fs" />
-    <Compile Include="Comp.fs" />  
-    <Compile Include="microc.fs" />
+    <Compile Include="Parse.fs" /> 
+    <Compile Include="Machine.fs" /> 
+    <Compile Include="Backend.fs" /> 
+    <Compile Include="Comp.fs" />   
+    <Compile Include="microc.fs" /> 
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="FsLexYacc" Version="10.2.0" />
+    <PackageReference Include="FsLexYacc" Version="10.2.0" /> 
   </ItemGroup>
 <ItemGroup>
 <!-- <MyItem Include="example\ex1.c" Args ="8"/> -->
